@@ -1,0 +1,146 @@
+.posts-container{
+    margin-top: 80px;
+    transition: 4sec ease;
+}
+
+.mt-50{
+    margin-top: 50px;
+}
+.mb-50{
+    margin-bottom: 50px;
+}
+
+
+.bg-teal-400 { 
+    background-color: #26a69a;
+}
+
+a{
+    text-decoration: none !important;
+}
+
+
+.fa {
+        color: red;
+}
+
+.right-container{
+    border-radius: 10px;
+    position: fixed;
+    right: 5%;
+    top: 95px;
+    height: 85vh;
+    width: 16%;
+    /* background-color: #26a69a; */
+    /* box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.35) 0px 5px 15px; */
+    overflow: hidden;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+    
+}
+
+.card-body{
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+}
+
+.posts-short{
+    margin: 20px;
+    
+}
+
+.posts-hed{
+    background-color:  #6a59d1;
+    padding: 5px;
+}
+
+.posts-hed h5{
+    margin: 10px;
+    padding-bottom: 10px;
+    
+    border-bottom: solid;
+    border-width: 1px;
+}
+
+.posts-short li a{
+    font-size: small;
+    font-weight: 500;
+    
+}
+
+.posts-short li a:hover{
+    text-shadow: rgb(219, 219, 219);
+    font-weight: 600;
+    scale: 1.4;
+}
+
+.posts-container .card-body a{
+    color: #6a59d1;;
+}
+
+.posts-container .card-body button{
+    background-color: #6a59d1;
+    width: 200px;
+    height: 28px;
+    margin: 5px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-top: 30px;
+}
+
+.posts-container .card-body button:hover{
+    scale: 1.02;
+}
+
+.posts-container .card-body img{
+    width: 220px;
+    height: 260px;
+    border-radius: 5px;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+}
+
+.page-posts li{
+    margin-top: 30px;
+}
+
+.page-posts p{
+    font-size: small;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.page-posts li svg{
+    /* display:none; */
+    margin-top: 0px;
+    border: solid;
+    border-radius: 10px;
+    height: 20px;
+    width: auto;
+
+}
+
+.right-container .search{
+    background-color: #6a59d1;
+    border-bottom: solid;
+    border-color: white;
+}
+
+.right-container .search input{
+    width: 92%;
+    border: solid;
+    border-color: white;
+    border: thin;
+    border-radius: 5px;
+    height: 40px;
+    padding: 5px;
+    margin-top:20px ;
+    margin-bottom:18px ;
+    margin-left: 8px;
+    
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+    font-size: small;
+}
+
+.right-container .search input:focus{
+    border: solid;
+    border-color: whitesmoke;
+}

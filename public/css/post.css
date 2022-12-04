@@ -1,0 +1,138 @@
+.container-main{
+    margin-bottom: 20px;
+    transition: .5sec ease;
+}
+
+.post-background-image{
+    /* position: absolute; */
+    position: relative;
+    margin-left: 0px;
+    margin-top: 0px;
+    margin-right: 0px;
+    background-image: url(../img/post.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    /* width: 200px; */
+    height: 50vh;
+    /* background-color: aqua; */
+}
+
+.post-container{
+    max-width: 800px;
+    /* transform: translate(70%, 0); */
+    padding: 2rem 2rem;
+    flex-direction: column;
+    display: inline-block;
+    position: absolute;
+    background: rgb(164, 155, 227);
+    border-radius: 10px;
+    opacity: .9;
+    top: 25%;
+    right: 25%;
+    margin-top: -50px;
+    margin-left: -50px;
+    
+}
+
+.post-container input[type=text], input[type=email], input[type=password], input[type=date], select{
+    
+    width: 100%;
+    margin-bottom: 20px;
+    height: 50px;
+    border: solid;
+    border-radius: 4px;
+    border-color:rgb(255, 255, 255);
+    padding: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: rgb(0, 0, 0);
+    font-size: small;
+}
+
+.post-container input[type=text]:hover, input[type=date]:hover, select:hover, textarea:hover, input[type=file]:hover, input[type=number]:hover{
+    scale: 1.008;
+    font-weight: 500;
+}
+
+.post-container input[type=text]:focus, input[type=date]:focus, select:focus, textarea:focus, input[type=file]:focus, input[type=number]:focus{
+    border-color: rgb(203, 203, 203);
+    scale: 1.008;
+    font-weight: 500;
+}
+
+.post-container input[type=file]{
+    /* width: 100%; */
+    margin-bottom: 20px;
+   
+    border: solid;
+    border-radius: 4px;
+    border-color:rgb(255, 255, 255);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: rgb(0, 0, 0);
+    font-size: small;
+}
+
+.post-container h2{
+    margin: 0 0 50px;
+}
+
+.post-container h6{
+    margin: 0 0 40px;
+}
+
+.top-text{
+    background: none;
+}
+
+.post-container textarea{
+    width: 100%;
+    margin-bottom: 20px;
+    resize: none;
+    border: solid;
+    border-radius: 4px;
+    border-color:rgb(255, 255, 255);
+    padding: 3px;
+    font-size: small;
+}
+
+.post-container input[type=submit]{
+    width: 100px;
+    padding: 7px 23px;
+    background:rgb(255, 255, 255);
+    color: var(--second-color);
+    border-radius: 6px;
+    border: rgb(255, 255, 255);
+}
+
+.post-container input[type=submit]:hover{
+    font-weight: 500;
+    scale: 1.02;
+}
+
+label{
+    font-weight: 500;
+    font-size: larger;
+}
+
+.post-container input[type=number]{
+    width: 19.5%;
+    margin-bottom: 20px;
+    height: 50px;
+    border: solid;
+    border-radius: 4px;
+    border-color:rgb(255, 255, 255);
+    padding: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: rgb(0, 0, 0);
+    font-size: small;
+}
+
+.post-container p{
+    margin-top: -20px;
+    margin-bottom: 10px;
+    color: rgb(171, 18, 18);
+    font-weight: 400;
+    font-size: small;
+}

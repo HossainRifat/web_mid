@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root{
+    /*=======Main theme colors=======*/
+    --first-color: #0e2431;
+    --second-color: #6a59d1;
+    --third-color: #777;
+    --line-color: rgb(224, 224, 224);
+  
+    /*=======Hover colors=======*/
+    --hover-color: #614fd0;
+  
+    /*=======Background colors=======*/
+    --body-bg-color: #fefefefe;
+    --card-bg-color: #fff;
+    --modal-bg-color: #fff;
+    --bg-transparent-color: rgba(0,0,0,0.1);
+    --transparent-color-01: rgba(0,0,0,0.1);
+    --transparent-color-02: rgba(106,89,209,0.1);
+  
+    /*=======Color Filter=======*/
+    --color-filter: invert(1);
+  
+    /*=======Box shadow=======*/
+    --box-shadow: 0px 0px 20px rgb(0 0 0 / 10%);
+  
+    /*=======Font size=======*/
+    --small-font-size: 0.9em;
+    --normal-font-size: 1em;
+  
+    /*=======Scroll bar colors=======*/
+    --scroll-bar-color: #e5cadf;
+    --scroll-thumb-color: #70768a;
+    --scroll-thumb-hover-color: #454f6b;
+  
+  }
+
+  *{
+    /* margin: 0px;
+    padding: 0px; */
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  a{
+    text-decoration: none;
+  }
+  
+  li{
+    list-style: none;
+  }
+
+
+header{
+    z-index: 99999;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    backdrop-filter: blur(20px);
+    transition: .6s ease;
+  }
+  
+  header.sticky{
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: var(--box-shadow);
+  }
+  
+  .nav-bar{
+    position: relative;
+    height: calc(4rem + 1rem);
+    max-width: 1250px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 8px;
+    transition: .6s ease;
+  }
+  
+  header.sticky .nav-bar{
+    height: calc(2.5rem + 1rem);
+  }
+  
+  .nav-bar .logo{
+    color: var(--first-color);
+    font-size: 1.3em;
+    font-weight: 600;
+  }
+  
+  .nav-items a{
+    color: var(--first-color);
+    font-size: var(--normal-font-size);
+    font-weight: 500;
+  }
+  
+  .nav-items a:not(:last-child){
+    margin-right: 50px;
+  }
+  
+  .nav-items a:hover{
+    color: var(--second-color);
+  }
+
+  .nav-items .chat{
+    font-size:20px;
+    
+  }
+
+  .nav-items .chat message:hover{
+    scale: 1.1;
+  }

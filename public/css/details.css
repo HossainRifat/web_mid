@@ -1,0 +1,309 @@
+/**
+ * WEBSITE: https://themefisher.com
+ * TWITTER: https://twitter.com/themefisher
+ * FACEBOOK: https://www.facebook.com/themefisher
+ * GITHUB: https://github.com/themefisher/
+ */
+
+/*
+Author       : Themefisher
+Template Name: Influencer - Book landing template
+Author URI : https://themefisher.com/
+Description: Influencer,it, onepage,clean,bootstrap4, 
+Version      : 1.0
+*/
+@import url("https://fonts.googleapis.com/css?family=Lora:400,700|Open+Sans:400,600,700&display=swap");
+
+
+/*--------------------
+Common Styles
+-----------------*/
+.section-heading {
+  margin-bottom: 80px;
+}
+
+.section {
+  position: relative;
+  padding: 8.125rem 0;
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding: 7.5rem 0;
+  }
+}
+.section-top {
+  padding-top: 8.125rem;
+}
+
+.section-bottom {
+  padding-bottom: 8.125rem;
+}
+
+@media (min-width: 768px) {
+  .section-top {
+    padding-top: 10.3125rem;
+  }
+}
+.bg-grey {
+  background: #F4F7FC;
+}
+
+.text-color {
+  color: rgb(98, 88, 174);
+}
+
+/*-------------------
+  BUTTONS STYLE
+----------------=----*/
+
+
+.btn:focus {
+  box-shadow: none !important;
+}
+
+.btn-main {
+  border-color: #385777;
+  color: #fff;
+  background: #385777;
+}
+.btn-main:hover {
+  background: #cc302b;
+  color: #fff;
+  border-color: #cc302b;
+}
+
+/*------------------------
+ BACKGROUND
+----------------------------*/
+a {
+  color: #222;
+  transition: all 0.3s ease-in-out;
+}
+
+a:hover, a:focus {
+  outline: none;
+  text-decoration: none;
+  color: #cc302b;
+}
+
+.border-top {
+  border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+.border-bottom {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+.text-color-2 {
+  color: #385777;
+}
+
+.text-lg {
+  font-size: 40px;
+  line-height: 1.4;
+}
+
+.text-md {
+  font-size: 32px;
+  line-height: 1.3;
+}
+
+.letter-spacing {
+  letter-spacing: 2px;
+}
+
+.text-sm {
+  font-size: 14px;
+  color: #cc302b;
+}
+
+@media (max-width: 400px) {
+  .btn {
+    padding: 15px 37px;
+  }
+  .display-4 {
+    font-size: 2rem;
+  }
+  .comment-area .media {
+    display: block;
+  }
+  .comment-area .media-body {
+    margin-top: 20px;
+  }
+}
+/*--------------------------
+PAGE BANNER
+--------------------------*/
+.page-banner-area {
+  padding: 180px 0px 90px;
+  position: relative;
+}
+
+/*-------------------
+   MENU
+----------------------*/
+
+/*----------------------
+ BANNER STYLE
+-----------------------*/
+.py-7 {
+  padding: 7.5rem 0;
+}
+
+/*-------------------------
+ HOME -2 
+-----------------------------*/
+.banner-main {
+  position: relative;
+}
+.banner-main:before {
+  position: absolute;
+  content: "";
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  background: #F4F7FC;
+  height: 80%;
+}
+
+h1 {
+  font-size: 60px;
+  line-height: 70px;
+  color: #263b5e;
+  font-weight: 600;
+}
+
+.main-banner {
+  padding: 80px 0px 150px;
+}
+.main-banner p {
+  padding-right: 100px;
+}
+
+.banner-main img{
+    width: 526px;
+    height: 789px;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    border-radius: 10px;
+}
+
+.banner-main a{
+    font-weight: 500;
+}
+
+.banner-main a:hover{
+    color: #cc302b;
+}
+
+
+
+
+
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+
+
+.bid-container{
+
+    padding: 50px;
+    align-content: center;
+    width: 100%;
+    margin-top: -100px;
+    transition: 4sec ease;
+    background-color: rgb(244, 247, 252);
+}
+
+.mt-50{
+    margin-top: 50px;
+}
+.mb-50{
+    margin-bottom: 50px;
+}
+
+
+.bg-teal-400 { 
+    background-color: #26a69a;
+}
+
+a{
+    text-decoration: none !important;
+}
+
+
+.fa {
+        color: red;
+}
+
+
+.card-body{
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+}
+
+.posts-short{
+    margin: 20px;
+    
+}
+
+.posts-hed{
+    background-color:  #6a59d1;
+    padding: 5px;
+}
+
+.posts-hed h5{
+    margin: 10px;
+    padding-bottom: 10px;
+    
+    border-bottom: solid;
+    border-width: 1px;
+}
+
+.posts-short li a{
+    font-size: small;
+    font-weight: 500;
+    
+}
+
+.posts-short li a:hover{
+    text-shadow: rgb(219, 219, 219);
+    font-weight: 600;
+    scale: 1.4;
+}
+
+.bid-container .card-body a{
+    color: #6a59d1;;
+}
+
+.bid-container .card-body button{
+    background-color: #6a59d1;
+    width: 200px;
+    height: 28px;
+    margin: 5px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-top: 30px;
+}
+
+.bid-container .card-body button:hover{
+    scale: 1.02;
+}
+
+.bid-container .card-body img{
+    width: 170px;
+    height: 170px;
+    border-radius: 5px;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+}
+
+.bid-container span{
+    color: #6a59d1;
+    font-weight: 500;
+}
+
+.bid-body{
+    padding: 20px;
+    margin-left: 100px;
+    border-radius: 10px;
+    border: solid;
+    border-width: thin;
+}

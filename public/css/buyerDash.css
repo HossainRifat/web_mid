@@ -1,0 +1,56 @@
+
+.my-security{
+    /* min-height: 416px; */
+}
+
+.my-security form{
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 46px;
+    margin-bottom: 46px;
+}
+
+.my-security input[type=password], input[type=text]{
+    font-size: small;
+    border-radius: 8px;
+    width: 100%;
+    height: 40px;
+    border: solid;
+    border-width: thin;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.my-security input[type=password]:hover{
+    font-weight: 500;
+    scale: 1.002;
+}
+
+.my-security input[type=text]{
+    height: 40px;
+    border: solid;
+    border-width: thin;
+}
+
+.my-security input[type=text]:hover{
+    font-weight: 500;
+    scale: 1.002;
+}
+
+.my-security form label{
+    color: rgb(52, 71, 103);
+}
+
+.my-security form input[type=submit]{
+    width: 100px;
+    padding: 7px 23px;
+    background-color: blueviolet;
+    color: white;
+    border-radius: 6px;
+    border: blueviolet;
+}
+
+.my-security form input[type=submit]:hover{
+    font-weight: 500;
+    scale: 1.02;
+}
