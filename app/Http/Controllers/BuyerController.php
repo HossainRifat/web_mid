@@ -13,6 +13,7 @@ use App\Rules\FileSaveRule;
 use App\Rules\PhoneRule;
 use Egulias\EmailValidator\Result\ValidEmail;
 use Faker\Core\File;
+use Illuminate\Auth\Events\Login as EventsLogin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Mail;
@@ -21,6 +22,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 
+use function PHPUnit\Framework\isNull;
 use function Symfony\Component\VarDumper\Dumper\esc;
 
 class BuyerController extends Controller
@@ -229,30 +231,41 @@ class BuyerController extends Controller
         return redirect()->route("Home");
     }
 
-    public function BuyerDashboard()
+    public function BuyerDashboard(Request $request)
     {
-        if (session()->has("email")) {
-            $user = buyer::where('email', session()->get("email"))->first();
-            if ($user) {
-                $checkout = 0;
-                $money = 0;
-                $active_order = 0;
-                if ($user->my_order) {
-                    foreach ($user->my_order as $item) {
-                        $checkout += count($item->my_checkout);
-                        $money += (int)$item->price;
-                        if ($item->status != "done") {
-                            $active_order += 1;
-                        }
+        $token = $request->header("Authorization");
+        $token = json_decode($token);
+       // return response($token,200);
+        if($token){
+            $check_token = login::where('token',$token->access_token)->where("logout_time",NULL)->first();
+            if($check_token){
+                $user = all_user::where("id",$check_token->all_users_id)->first();
+                if($user){
+                    $buyer = buyer::where("email",$user->email)->first();
+                    if($buyer){
+                        return response($buyer,200);
+                    }
+                    else{
+                        return response("Invalid Buyer",401);
+
                     }
                 }
-                return view("buyer.Dashboard")->with("user", $user)->with("post", count($user->my_post))->with("order", count($user->my_order))->with("checkout", $checkout)->with("money", $money)->with("active_order", $active_order)->with("my_post", $user->my_post);
-            } else {
-                return redirect()->route("Login");
+                else{
+                    return response("Invalid User",401);
+
+                }
             }
-        } else {
-            return redirect()->route("Login");
+            else{
+                return response("Invalid Check Token",401);
+
+            }
         }
+        else{
+            return response("Invalid Token",401);
+        }
+
+
+        
     }
 
     public function Logout()

@@ -71,6 +71,7 @@ class LoginController extends Controller
                 $l1->location = $ipInfo->city .", ".$ipInfo->state_name .", ".$ipInfo->country;
                 $l1->device = $request->device;
                 $l1->token = $token;
+                $l1->logout_time = NULL;
                 $l1->save();
 
                 // $r = "Login Successful. " . $user->entity . $token;
