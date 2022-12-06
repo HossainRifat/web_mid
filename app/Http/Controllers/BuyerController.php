@@ -39,44 +39,32 @@ class BuyerController extends Controller
                 "email" => ["required", "email", new EmailRule],
                 "address" => ["required", "regex:/^[#.0-9a-zA-Z\s,-]+$/i", "min:3", "max:1000"],
                 // "password" => "required | min:8 | max:50",
-                "photo" => ["required", "mimes:jpg,png,jpeg"]
+                //"photo" => ["required", "mimes:jpg,png,jpeg"]
             ],
-            [
-                // "password.min" => "Password should be at least 8 character.",
-                "photo.mines" => "Only jpg, jpeg, png files are allowed."
-            ]
+            // [
+            //     // "password.min" => "Password should be at least 8 character.",
+            //     "photo.mines" => "Only jpg, jpeg, png files are allowed."
+            // ]
 
         );
 
-        if ($request->photo) {
-            $filename = date("d-m-Y_H-i-s") . '_profile_' . $request->email . '.' . $request->photo->extension();
-            //$filepath = $request->file('file')->storeAs('uploads', $filename, 'public');
-            $filePath = $request->file('photo')->storeAs('uploads', $filename, 'public');
-            //dd($filename);
-            //$filePath = Storage::putFileAs("uploads", $request->file("photo"), , "public");
-            //dd($filePath);
-            if ($filePath) {
-                $data = [
-                    'first_name' => $request->first_name,
-                    'last_name' => $request->last_name,
-                    'dob' => $request->dob,
-                    'gender' => $request->gender,
-                    'email' => $request->email,
-                    'address' => $request->address,
-                    // 'password' => $request->password,
-                    'photo' => $filename,
-                ];
-                $jsonData = json_encode($data);
-                session()->put("reg1", $jsonData);
-                session()->put("email", $request->email);
-                session()->save();
-                //dd(session()->get("reg1"));
-
-                return redirect()->route('ValidationEmail');
-            } else {
-                return redirect()->route('Registration');
-            }
-        }
+        
+        $data = [
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'dob' => $request->dob,
+            'gender' => $request->gender,
+            'email' => $request->email,
+            'address' => $request->address,
+            // 'password' => $request->password,
+            //'photo' => $filename,
+        ];
+        $jsonData = json_encode($data);
+        session()->put("reg1", $jsonData);
+        session()->put("email", $request->email);
+        session()->save();
+        return response($jsonData,200);
+        
     }
 
     public function Registration02(Request $request)

@@ -40,6 +40,6 @@ class EmailRule implements Rule
      */
     public function message()
     {
-        return 'The email already exists.';
+        return response('The email already exists.',401);
     }
 }

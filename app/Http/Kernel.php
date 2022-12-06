@@ -67,5 +67,7 @@ class Kernel extends HttpKernel
         'ValidReg03' => \App\Http\Middleware\ValidReg03::class,
         'ValidBuyerLogin' => \App\Http\Middleware\ValidBuyerLogin::class,
         'ChangePassRule' => \App\Http\Middleware\ChangePassRule::class,
+        'ValidToken' => \App\Http\Middleware\ValidToken::class,
+
     ];
 }

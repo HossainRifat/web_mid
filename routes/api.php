@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\BuyerController;
 use App\Http\Controllers\LoginController;
-use App\Http\Middleware\ValidToken;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,4 +19,6 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login', [LoginController::class, 'LoginSubmit']);
 Route::get('/all', [LoginController::class, 'LoginAll']);
 Route::get('/t', [LoginController::class, 't']);
-Route::get('/buyer/profile/get', [BuyerController::class, 'BuyerDashboard'])->name("BuyerDashboard");
+Route::get('/buyer/profile/get', [BuyerController::class, 'BuyerDashboard'])->name("BuyerDashboard")->middleware('ValidToken');
+
+Route::post('/buyer/registration1', [BuyerController::class, 'RegistrationSubmit']);

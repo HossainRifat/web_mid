@@ -24,6 +24,6 @@ class ValidToken
             return $next($request);
 
         }
-        else return response("Invalid Token",401);
+        else return response("Invalid Token middleware",401);
     }
 }
