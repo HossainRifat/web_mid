@@ -20,6 +20,6 @@ class ValidReg02
         if ($request->session()->has("reg1")) {
             return $next($request);
         }
-        return redirect()->route('Registration', 'buyer');
+        return response("Unauthorized",401);
     }
 }

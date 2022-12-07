@@ -29,25 +29,6 @@ class BuyerController extends Controller
 {
     public function RegistrationSubmit(Request $request)
     {
-        $this->validate(
-            $request,
-            [
-                "first_name" => ["required", "regex:/^[a-z ,.'-]+$/i", "min:1", "max:50"],
-                "last_name" => ["required", "regex:/^[a-z ,.'-]+$/i", "min:1", "max:50"],
-                "dob" => ["required", "date", new AgeRule],
-                "gender" => "required",
-                "email" => ["required", "email", new EmailRule],
-                "address" => ["required", "regex:/^[#.0-9a-zA-Z\s,-]+$/i", "min:3", "max:1000"],
-                // "password" => "required | min:8 | max:50",
-                //"photo" => ["required", "mimes:jpg,png,jpeg"]
-            ],
-            // [
-            //     // "password.min" => "Password should be at least 8 character.",
-            //     "photo.mines" => "Only jpg, jpeg, png files are allowed."
-            // ]
-
-        );
-
         
         $data = [
             'first_name' => $request->first_name,
@@ -57,13 +38,31 @@ class BuyerController extends Controller
             'email' => $request->email,
             'address' => $request->address,
             // 'password' => $request->password,
-            //'photo' => $filename,
+            'photo' => "none",
         ];
         $jsonData = json_encode($data);
         session()->put("reg1", $jsonData);
         session()->put("email", $request->email);
         session()->save();
-        return response($jsonData,200);
+
+        $validation_id = Str::random(32);
+        // session()->forget("validation_id");
+        // session()->put("validation_id", $validation_id);
+        // session()->save();
+        
+
+        $details = [
+            'title' => 'Welcome form RMG SOlution.',
+            'url' => 'http://localhost:3000/buyer/registration2/' . $validation_id . '',
+            'o_details' => $validation_id
+        ];
+        // return $details;
+
+        Mail::to($request->email)->send(new ValidationEmail($details));
+
+        // return Redirect::to("https://mail.google.com/mail/");
+
+        return response($validation_id,200);
         
     }
 
@@ -79,117 +78,108 @@ class BuyerController extends Controller
 
     public function Registration02Submit(Request $request)
     {
-        $this->validate(
-            $request,
-            [
-                "nid" => ["required", "max:50"],
-                "passport" => ["max:50"],
-                "phone" => ["required", "max:50", new PhoneRule],
-                "account" => ["required", "mimes:pdf"],
-                "documents" => ["mimes:pdf"],
 
-            ],
-            [
-                "account.mines" => "Only pdf files are allowed.",
-                "documents.mines" => "Only pdf files are allowed."
-            ]
 
-        );
-
-        if ($request->account) {
-            $filename = date("d-m-Y_H-i-s") . '_account_' . session()->get('email') . '.' . $request->account->extension();
-            //$filepath = $request->file('file')->storeAs('uploads', $filename, 'public');
-            $filePath = $request->file('account')->storeAs('uploads', $filename, 'public');
-            //dd($filename);
-            //$filePath = Storage::putFileAs("uploads", $request->file("photo"), , "public");
-            //dd($filePath);
-            $filePath2 = NULL;
-            if ($request->documents) {
-                $filename2 = date("d-m-Y_H-i-s") . '_documents_' . session()->get('email') . '.' . $request->documents->extension();
-                $filePath2 = $request->file('documents')->storeAs('uploads', $filename2, 'public');
-            }
-            if ($filePath) {
-                if ($filePath2) {
-
-                    if ($request->passport) {
-                        $data = [
-                            'nid' => $request->nid,
-                            'passport' => $request->passport,
-                            'phone' => $request->phone,
-                            'account' => $filename,
-                            'documents' => $filePath2,
-                        ];
-                    } else {
-                        $data = [
-                            'nid' => $request->nid,
-                            'phone' => $request->phone,
-                            'account' => $filename,
-                            'documents' => $filePath2,
-                            'passport' => "NULL",
-                        ];
-                    }
-                } else {
-                    if ($request->passport) {
-                        $data = [
-                            'nid' => $request->nid,
-                            'passport' => $request->passport,
-                            'phone' => $request->phone,
-                            'account' => $filename,
-                            'documents' => "NULL",
-                        ];
-                    } else {
-                        $data = [
-                            'nid' => $request->nid,
-                            'phone' => $request->phone,
-                            'account' => $filename,
-                            'documents' => "NULL",
-                            'passport' => "NULL",
-                        ];
-                    };
-                }
-
-                $jsonData = json_encode($data);
-                //dd($jsonData);
-                session()->put("reg2", $jsonData);
-                session()->save();
-                //dd(session()->get('reg2'), session()->get('reg1'));
-
-                return redirect()->route('Registration03');
-            } else {
-                return redirect()->route('Registration02');
-            }
+        if ($request->passport) {
+            $data = [
+                'nid' => $request->nid,
+                'passport' => $request->passport,
+                'phone' => $request->phone,
+                'account' => "none",
+                'documents' => NULL,
+            ];
+        } else {
+            $data = [
+                'nid' => $request->nid,
+                'phone' => $request->phone,
+                'account' => "none",
+                'documents' => NULL,
+                'passport' => NULL,
+            ];
         }
-    }
+
+        $jsonData = json_encode($data);
+        //         //dd($jsonData);
+        session()->put("reg2", $jsonData);
+        session()->save();
+        return response("data saved", 200);
+    } 
+
+        // if ($request->account) {
+        //     $filename = date("d-m-Y_H-i-s") . '_account_' . session()->get('email') . '.' . $request->account->extension();
+        //     $filePath = $request->file('account')->storeAs('uploads', $filename, 'public');
+        //     $filePath2 = NULL;
+        //     if ($request->documents) {
+        //         $filename2 = date("d-m-Y_H-i-s") . '_documents_' . session()->get('email') . '.' . $request->documents->extension();
+        //         $filePath2 = $request->file('documents')->storeAs('uploads', $filename2, 'public');
+        //     }
+        //     if ($filePath) {
+        //         if ($filePath2) {
+
+        //             if ($request->passport) {
+        //                 $data = [
+        //                     'nid' => $request->nid,
+        //                     'passport' => $request->passport,
+        //                     'phone' => $request->phone,
+        //                     'account' => $filename,
+        //                     'documents' => $filePath2,
+        //                 ];
+        //             } else {
+        //                 $data = [
+        //                     'nid' => $request->nid,
+        //                     'phone' => $request->phone,
+        //                     'account' => $filename,
+        //                     'documents' => $filePath2,
+        //                     'passport' => "NULL",
+        //                 ];
+        //             }
+        //         } else {
+        //             if ($request->passport) {
+        //                 $data = [
+        //                     'nid' => $request->nid,
+        //                     'passport' => $request->passport,
+        //                     'phone' => $request->phone,
+        //                     'account' => $filename,
+        //                     'documents' => "NULL",
+        //                 ];
+        //             } else {
+        //                 $data = [
+        //                     'nid' => $request->nid,
+        //                     'phone' => $request->phone,
+        //                     'account' => $filename,
+        //                     'documents' => "NULL",
+        //                     'passport' => "NULL",
+        //                 ];
+        //             };
+        //         }
+
+        //         $jsonData = json_encode($data);
+        //         //dd($jsonData);
+        //         session()->put("reg2", $jsonData);
+        //         session()->save();
+        //         //dd(session()->get('reg2'), session()->get('reg1'));
+
+        //         return redirect()->route('Registration03');
+        //     } else {
+        //         return redirect()->route('Registration02');
+        //     }
+        // }
 
     public function Registration03()
     {
         return view('buyer.registration03');
     }
 
-    public function Registration03Submit(Request $request)
+    public function Registration03Submit(Request $data)
     {
-        $this->validate(
-            $request,
-            [
-                "password" => ["required", "max:50", "min:8"],
-                "password_confirmation" => ["required", "min:8", "max:50", "same:password"],
+        // $jsondata = session()->get('reg1');
+        // $data = json_decode($jsondata);
+        // //return response($jsondata,200);
+        // $jsondata2 = session()->get('reg2');
+        // $data2 = json_decode($jsondata2);
+      //  return response($data,200);
 
-            ],
-            [
-                "password.min" => "Password must be at least 8 character.",
-                "password_confirmation.min" => "Password must be at least 8 character.",
-                "password_confirmation.same" => "Password did not match."
-            ]
-
-        );
-
-        $jsondata = session()->get('reg1');
-        $data = json_decode($jsondata);
-
-        $jsondata2 = session()->get('reg2');
-        $data2 = json_decode($jsondata2);
-
-        $hash_password = Hash::make($request->password);
+        $hash_password = Hash::make($data->password);
 
         $buyer = new buyer();
         $buyer->first_name = $data->first_name;
@@ -199,15 +189,15 @@ class BuyerController extends Controller
         $buyer->email = $data->email;
         $buyer->address = $data->address;
         $buyer->password = $hash_password;
-        $buyer->photo = $data->photo;
+        $buyer->photo = "none";
 
-        $buyer->nid = $data2->nid;
-        $buyer->passport = $data2->passport;
-        $buyer->phone = $data2->phone;
-        $buyer->account = $data2->account;
-        $buyer->documents = $data2->documents;
+        $buyer->nid = $data->nid;
+        $buyer->passport = $data->passport;
+        $buyer->phone = $data->phone;
+        $buyer->account = "none";
+        $buyer->documents = "none";
         $buyer->status = "invalid";
-
+        //return response($buyer,200);
         $buyer->save();
 
         $user = new all_user();
@@ -216,7 +206,7 @@ class BuyerController extends Controller
         $user->entity = "buyer";
         $user->save();
 
-        return redirect()->route("Home");
+        return response("Data inserted");
     }
 
     public function BuyerDashboard(Request $request)

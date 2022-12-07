@@ -5,7 +5,7 @@
 Click the link to valid your Email.
 
 @component('mail::button', ['url' => $details['url']])
-Button Text
+Click Here
 @endcomponent
 
 Thanks,<br>

@@ -22,3 +22,7 @@ Route::get('/t', [LoginController::class, 't']);
 Route::get('/buyer/profile/get', [BuyerController::class, 'BuyerDashboard'])->name("BuyerDashboard")->middleware('ValidToken');
 
 Route::post('/buyer/registration1', [BuyerController::class, 'RegistrationSubmit']);
+Route::post('/buyer/registration2', [BuyerController::class, 'Registration02Submit']);
+Route::post('/buyer/registration3', [BuyerController::class, 'Registration03Submit']);
+
+
