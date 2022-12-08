@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\ValidationEmail;
 use App\Models\all_user;
+use App\Models\bid;
 use App\Models\buyer;
 use App\Models\login;
 use App\Rules\AgeRule;
@@ -22,8 +23,24 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 
+
 use function PHPUnit\Framework\isNull;
 use function Symfony\Component\VarDumper\Dumper\esc;
+
+class dashBoardModel{
+    var $user;
+    var $post;
+    var $order;
+    var $checkout;
+    var $money;
+    var $activeOrder;
+    var $myPost;
+}
+
+class securityModel{
+    var $user;
+    var $login;
+}
 
 class BuyerController extends Controller
 {
@@ -211,39 +228,46 @@ class BuyerController extends Controller
 
     public function BuyerDashboard(Request $request)
     {
-        $token = $request->header("Authorization");
-        $token = json_decode($token);
-       // return response($token,200);
-        if($token){
-            $check_token = login::where('token',$token->access_token)->where("logout_time",NULL)->first();
-            if($check_token){
-                $user = all_user::where("id",$check_token->all_users_id)->first();
-                if($user){
-                    $buyer = buyer::where("email",$user->email)->first();
-                    if($buyer){
-                        return response($buyer,200);
-                    }
-                    else{
-                        return response("Invalid Buyer",401);
-
+        $buyer = buyer::where("email","rh140035@gmail.com")->first();
+        if($buyer){
+            $d = new dashBoardModel();
+            $checkout = 0;
+            $money = 0;
+            $active_order = 0;
+            if ($buyer->my_order) {
+                foreach ($buyer->my_order as $item) {
+                    $checkout += count($item->my_checkout);
+                    $money += (int)$item->price;
+                    if ($item->status != "done") {
+                        $active_order += 1;
                     }
                 }
-                else{
-                    return response("Invalid User",401);
-
+            }
+            $bid_info = new bid();
+            foreach($buyer->my_post as $item){
+                if($item->bid){
+                    foreach($item->bid as $item2){
+                        if($item2->status == "post"){
+                            $bid_info .= $item2;
+                        }
+                    }
                 }
             }
-            else{
-                return response("Invalid Check Token",401);
-
-            }
+            $d->user = $buyer;
+            $d->post = count($buyer->my_post);
+            $d->order = count($buyer->my_order);
+            $d->checkout = $checkout;
+            $d->money = $money;
+            $d->activeOrder = $active_order;
+            $d->myPost = $bid_info;
+            //dd($buyer);
+            $data = json_encode($d);
+            return response($data,200);
         }
         else{
-            return response("Invalid Token",401);
+            return response("Invalid Buyer",401);
+
         }
-
-
-        
     }
 
     public function Logout()
@@ -286,11 +310,24 @@ class BuyerController extends Controller
 
     public function Profile(Request $request)
     {
-        if (session()->has("email")) {
-            $user = buyer::where('email', session()->get("email"))->first();
-            return view("buyer.profile")->with("user", $user)->with("data", $request->id);
-        } else {
-            return redirect()->route("Login");
+        $token = $request->header("Authorization");
+        $token = json_decode($token);
+       // return response($token,200);
+        if($token){
+            $check_token = login::where('token',$token->access_token)->where("logout_time",NULL)->first();
+            if($check_token){
+                $user = all_user::where("id",$check_token->all_users_id)->first();
+                if($user){
+                    $buyer = buyer::where("email",$user->email)->first();
+                    if($buyer){
+                        return response($buyer,200);
+                    }
+                    else{
+                        return response("Invalid Buyer",401);
+
+                    }
+                }
+            }
         }
     }
 
@@ -369,14 +406,29 @@ class BuyerController extends Controller
         }
     }
 
-    public function Security()
+    public function Security(Request $request)
     {
-        if (session()->has("email")) {
-            $user = buyer::where('email', session()->get("email"))->first();
-            $all_user = all_user::where('email', session()->get("email"))->first();
-            return view("buyer.security")->with("user", $user)->with("all_user", $all_user);
-        } else {
-            return redirect()->route('Login');
+        $token = $request->header("Authorization");
+        $token = json_decode($token);
+       // return response($token,200);
+        if($token){
+            $check_token = login::where('token',$token->access_token)->where("logout_time",NULL)->first();
+            if($check_token){
+                $user = all_user::where("id",$check_token->all_users_id)->first();
+
+                if($user){
+                    $user2 = login::where("all_users_id",$user->id)->where("logout_time",NULL)->get();
+                    $buyer = buyer::where('email', $user->email)->first();
+                    if($buyer){
+                        $s = new securityModel();
+                        $s->user = $buyer;
+                        $s->login = $user2;
+                        $data = json_encode($s);
+                        return response($data,200);
+                    }
+                    
+                }
+            }
         }
     }
 

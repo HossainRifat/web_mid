@@ -19,7 +19,11 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login', [LoginController::class, 'LoginSubmit']);
 Route::get('/all', [LoginController::class, 'LoginAll']);
 Route::get('/t', [LoginController::class, 't']);
-Route::get('/buyer/profile/get', [BuyerController::class, 'BuyerDashboard'])->name("BuyerDashboard")->middleware('ValidToken');
+Route::get('/buyer/dashboard', [BuyerController::class, 'BuyerDashboard'])->name("BuyerDashboard");
+Route::get('/buyer/profile/get', [BuyerController::class, 'Profile'])->name("BuyerDashboard")->middleware('ValidToken');
+Route::get('/buyer/security/get', [BuyerController::class, 'Security'])->name("BuyerDashboard")->middleware('ValidToken');
+
+
 
 Route::post('/buyer/registration1', [BuyerController::class, 'RegistrationSubmit']);
 Route::post('/buyer/registration2', [BuyerController::class, 'Registration02Submit']);
