@@ -447,14 +447,18 @@ class BuyerController extends Controller
 
     public function SessionLogout(Request $request)
     {
-        $user = login::where('token', $request->id)->first();
-        if ($user) {
-            $user->logout_time = date('h:i:s A m/d/Y', strtotime(date('h:i:s A m/d/Y')));
-            $user->save();
-            return redirect()->route("Security");
-        } else {
-            return redirect()->route("Login");
+        $token = $request->header("Authorization");
+        $token = json_decode($token);
+        // return response($token,200);
+        if ($token) {
+            $check_token = login::where('token', $token->access_token)->where("logout_time", NULL)->first();
+            if ($check_token) {
+                $check_token->logout_time = date('h:i:s A m/d/Y', strtotime(date('h:i:s A m/d/Y')));
+                $check_token->save();
+                return response("Logout", 200);
+            }
         }
+        return response("Logout", 401);
     }
 
     public function ChangePass(Request $request)

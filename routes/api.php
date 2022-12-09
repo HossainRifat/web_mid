@@ -22,7 +22,9 @@ Route::get('/t', [LoginController::class, 't']);
 Route::get('/buyer/dashboard', [BuyerController::class, 'BuyerDashboard'])->name("BuyerDashboard");
 Route::get('/buyer/profile/get', [BuyerController::class, 'Profile'])->middleware('ValidToken');
 Route::get('/buyer/security/get', [BuyerController::class, 'Security'])->middleware('ValidToken');
-Route::post('/buyer/security/update', [BuyerController::class, 'ChangePass']);
+Route::post('/buyer/security/update', [BuyerController::class, 'ChangePass'])->middleware('ValidToken');
+Route::get('/buyer/logout', [BuyerController::class, 'SessionLogout'])->middleware('ValidToken');
+
 
 
 
