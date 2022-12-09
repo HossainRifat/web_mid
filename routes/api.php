@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BuyerController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PostController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +25,8 @@ Route::get('/buyer/profile/get', [BuyerController::class, 'Profile'])->middlewar
 Route::get('/buyer/security/get', [BuyerController::class, 'Security'])->middleware('ValidToken');
 Route::post('/buyer/security/update', [BuyerController::class, 'ChangePass'])->middleware('ValidToken');
 Route::get('/buyer/logout', [BuyerController::class, 'SessionLogout'])->middleware('ValidToken');
+Route::get('/buyer/posts/{id}', [PostController::class, 'GetPosts'])->middleware('ValidToken');
+Route::get('/buyer/posts/search/{id}', [PostController::class, 'search'])->middleware('ValidToken');
 
 
 
