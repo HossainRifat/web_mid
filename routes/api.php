@@ -27,7 +27,7 @@ Route::post('/buyer/security/update', [BuyerController::class, 'ChangePass'])->m
 Route::get('/buyer/logout', [BuyerController::class, 'SessionLogout'])->middleware('ValidToken');
 Route::get('/buyer/posts/{id}', [PostController::class, 'GetPosts'])->middleware('ValidToken');
 Route::get('/buyer/posts/search/{id}', [PostController::class, 'search'])->middleware('ValidToken');
-
+Route::get('/buyer/post/details/{id}', [PostController::class, 'PostDetails'])->middleware('ValidToken');
 
 
 

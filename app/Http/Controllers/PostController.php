@@ -10,6 +10,13 @@ use App\Rules\quantiRule;
 use App\Rules\quantiRule2;
 use Illuminate\Http\Request;
 
+class postModel
+{
+    var $quantity;
+    var $price;
+    var $post;
+}
+
 class PostController extends Controller
 {
     public function Post()
@@ -208,7 +215,23 @@ class PostController extends Controller
             }
         }
 
-        return view("buyer.postDetails")->with("post", $post);
+        $var = (explode(",", $post->quantity));
+        $total_product = 0;
+        $total_amount = 0;
+        foreach ($var as $item2) {
+            $var2 = explode("=", $item2);
+            $total_product += (int)$var2[1];
+            $total_amount = (int)$post->price * $total_product;
+        }
+
+        $p = new postModel();
+        $p->price = $total_amount;
+        $p->quantity = $total_product;
+        $p->post = $post;
+
+        $data = json_encode($p);
+
+        return response($data, 200);
     }
 
     public function search(Request $request)
