@@ -73,6 +73,10 @@ class BuyerController extends Controller
         session()->put("email", $request->email);
         session()->save();
 
+        // $photo = $request->photo[0];
+        // $filename = date("d-m-Y_H-i-s") . '_profile_' . $request->email . '.' . $photo->extension();
+        //$filePath = $request->file('photo[0]')->storeAs('uploads', $filename, 'public');
+
         $validation_id = Str::random(32);
         // session()->forget("validation_id");
         // session()->put("validation_id", $validation_id);
@@ -208,6 +212,9 @@ class BuyerController extends Controller
 
         $hash_password = Hash::make($data->password);
 
+
+
+
         $buyer = new buyer();
         $buyer->first_name = $data->first_name;
         $buyer->last_name = $data->last_name;
@@ -238,52 +245,64 @@ class BuyerController extends Controller
 
     public function BuyerDashboard(Request $request)
     {
-        $buyer = buyer::where("email", "rh140035@gmail.com")->first();
-        if ($buyer) {
-            $d = new dashBoardModel();
-            $checkout = 0;
-            $money = 0;
-            $active_order = 0;
-            if ($buyer->my_order) {
-                foreach ($buyer->my_order as $item) {
-                    $checkout += count($item->my_checkout);
-                    $money += (int)$item->price;
-                    if ($item->status != "done") {
-                        $active_order += 1;
-                    }
-                }
-            }
-            $bid_info = array();
-            $b = new bidModel();
-            $i = 0;
-            foreach ($buyer->my_post as $item) {
-                if ($item->bid) {
-                    foreach ($item->bid as $item2) {
-                        if ($item2->status == "post") {
-                            $b->seller = $item2->seller->first_name . " " . $item2->seller->last_name;
-                            $b->postId = $item->id;
-                            $b->postTitle = $item->title;
-                            $b->amount = $item2->price;
-                            $b->date = $item2->bid_date;
-                            $bid_info[$i] = $b;
-                            $i++;
+        $token = $request->header("Authorization");
+        $token = json_decode($token);
+        // return response($token,200);
+        if ($token) {
+            $check_token = login::where('token', $token->access_token)->where("logout_time", NULL)->first();
+            if ($check_token) {
+                $user = all_user::where("id", $check_token->all_users_id)->first();
+                if ($user) {
+                    $buyer = buyer::where("email", $user->email)->first();
+                    if ($buyer) {
+                        $d = new dashBoardModel();
+                        $checkout = 0;
+                        $money = 0;
+                        $active_order = 0;
+                        if ($buyer->my_order) {
+                            foreach ($buyer->my_order as $item) {
+                                $checkout += count($item->my_checkout);
+                                $money += (int)$item->price;
+                                if ($item->status != "done") {
+                                    $active_order += 1;
+                                }
+                            }
                         }
+                        $bid_info = array();
+                        $b = new bidModel();
+                        $i = 0;
+                        foreach ($buyer->my_post as $item) {
+                            if ($item->bid) {
+                                foreach ($item->bid as $item2) {
+                                    if ($item2->status == "post") {
+                                        $b->seller = $item2->seller->first_name . " " . $item2->seller->last_name;
+                                        $b->postId = $item->id;
+                                        $b->postTitle = $item->title;
+                                        $b->amount = $item2->price;
+                                        $b->date = $item2->bid_date;
+                                        $bid_info[$i] = $b;
+                                        $i++;
+                                    }
+                                }
+                            }
+                        }
+                        $d->user = $buyer;
+                        $d->post = count($buyer->my_post);
+                        $d->order = count($buyer->my_order);
+                        $d->checkout = $checkout;
+                        $d->money = $money;
+                        $d->activeOrder = $active_order;
+                        $d->myPost = $bid_info;
+                        //dd($buyer);
+                        $data = json_encode($d);
+                        return response($data, 200);
+                    } else {
+                        return response("Invalid Buyer", 401);
                     }
                 }
             }
-            $d->user = $buyer;
-            $d->post = count($buyer->my_post);
-            $d->order = count($buyer->my_order);
-            $d->checkout = $checkout;
-            $d->money = $money;
-            $d->activeOrder = $active_order;
-            $d->myPost = $bid_info;
-            //dd($buyer);
-            $data = json_encode($d);
-            return response($data, 200);
-        } else {
-            return response("Invalid Buyer", 401);
         }
+        return response("Invalid Buyer", 401);
     }
 
     public function Logout()
@@ -304,14 +323,31 @@ class BuyerController extends Controller
         return redirect()->route("Login");
     }
 
-    public function RemoveAccount()
+    public function RemoveAccount(Request $request)
     {
+        $token = $request->header("Authorization");
+        $token = json_decode($token);
+        // return response($token,200);
+        if ($token) {
+            $check_token = login::where('token', $token->access_token)->where("logout_time", NULL)->first();
+            if ($check_token) {
+                $user = all_user::where("id", $check_token->all_users_id)->first();
+                if ($user) {
+                    $buyer = buyer::where("email", $user->email)->first();
+                    if ($buyer) {
+                        $check_token->logout_time = date('h:i:s A m/d/Y', strtotime(date('h:i:s A m/d/Y')));
+                        $check_token->save();
+                        all_user::where("email", $buyer->email)->delete();
+                        return response("deleted", 200);
+                    } else {
+                        return response("Invalid Buyer", 401);
+                    }
+                }
+            }
+        }
+
         $user = login::where('token', session()->get("token"))->first();
         if ($user) {
-            $user->logout_time = date('h:i:s A m/d/Y', strtotime(date('h:i:s A m/d/Y')));
-            $user->save();
-
-            all_user::where("email", session()->get("email"))->delete();
         }
 
 

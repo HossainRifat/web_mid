@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login', [LoginController::class, 'LoginSubmit']);
 Route::get('/all', [LoginController::class, 'LoginAll']);
 Route::get('/t', [LoginController::class, 't']);
-Route::get('/buyer/dashboard', [BuyerController::class, 'BuyerDashboard'])->name("BuyerDashboard");
+Route::get('/buyer/dashboard', [BuyerController::class, 'BuyerDashboard'])->middleware('ValidToken');
 Route::get('/buyer/profile/get', [BuyerController::class, 'Profile'])->middleware('ValidToken');
 Route::get('/buyer/security/get', [BuyerController::class, 'Security'])->middleware('ValidToken');
 Route::post('/buyer/security/update', [BuyerController::class, 'ChangePass'])->middleware('ValidToken');
@@ -28,6 +28,7 @@ Route::get('/buyer/logout', [BuyerController::class, 'SessionLogout'])->middlewa
 Route::get('/buyer/posts/{id}', [PostController::class, 'GetPosts'])->middleware('ValidToken');
 Route::get('/buyer/posts/search/{id}', [PostController::class, 'search'])->middleware('ValidToken');
 Route::get('/buyer/post/details/{id}', [PostController::class, 'PostDetails'])->middleware('ValidToken');
+Route::get('/buyer/delete', [BuyerController::class, 'RemoveAccount'])->middleware('ValidToken');
 
 
 
