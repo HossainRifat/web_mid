@@ -26,7 +26,7 @@
                     <div class="card card-body mt-3">
                         <div class="media align-items-center align-items-lg-start text-lg-left flex-column flex-lg-row">
                             <div class="mr-2 mb-3 mb-lg-0">
-                                <img src="/storage/uploads/{{$item->photo}}" width="150" height="150" alt="">
+                                <img src="/storage/uploads/{{$item->photo}}" width="150" height="250" alt="">
                             </div>
 
                             <div class="media-body">

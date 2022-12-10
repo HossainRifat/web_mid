@@ -2,7 +2,10 @@
 
 use App\Http\Controllers\BuyerController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PostAPIController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\SellerAPIController;
+use App\Http\Controllers\SellerEmailController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -36,3 +39,16 @@ Route::get('/buyer/delete', [BuyerController::class, 'RemoveAccount'])->middlewa
 Route::post('/buyer/registration1', [BuyerController::class, 'RegistrationSubmit']);
 Route::post('/buyer/registration2', [BuyerController::class, 'Registration02Submit']);
 Route::post('/buyer/registration3', [BuyerController::class, 'Registration03Submit']);
+
+
+Route::post('/sellerlogin', [SellerAPIController::class, 'APILogin']); //done
+Route::post('/sellerlogout', [SellerAPIController::class, 'APILogout']); //done
+Route::post('/sellerregister', [SellerAPIController::class, 'APIRegister']);
+Route::get('/sellerorders', [SellerAPIController::class, 'APIOrders']);
+Route::get('/sellerorderdetails/{id}', [SellerAPIController::class, 'APIOrderDetails']);
+Route::get('/sellerprofile/{id}', [SellerAPIController::class, 'APIProfile']); // done
+Route::get('/sendmail', [SellerEmailController::class, 'showMail']);
+Route::get('/orderhistoryinvoice', [SellerEmailController::class, 'historyMail']);
+
+Route::get('/postlist', [PostAPIController::class, 'apilist']); //done
+Route::get('/postdetails/{id}', [PostAPIController::class, 'apidetails']); //done
