@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\RegistrationMail;
 use App\Mail\SellerHistoryMail;
 use App\Mail\TestMail;
 use App\Models\bid;
@@ -13,8 +14,8 @@ class SellerEmailController extends Controller
 {
     public function sendMail()
     {
-        $mail = session()->get('user');
-        $code = int::random(4);
+        $mail = "rislam727433@gmail.com";
+        $code = "2761";
         $details = [
             'title' => 'Confirmation Mail',
             'url' => 'https://www.mail.google.com',
@@ -23,7 +24,7 @@ class SellerEmailController extends Controller
         ];
 
         //return $details;
-        Mail::to($mail)->send(new TestMail($details));
+        Mail::to($mail)->send(new RegistrationMail($details));
 
         return $code;
     }

@@ -20,7 +20,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// ################################ BUYER ###############################
+
 Route::post('/login', [LoginController::class, 'LoginSubmit']);
+
 Route::get('/all', [LoginController::class, 'LoginAll']);
 Route::get('/t', [LoginController::class, 't']);
 Route::get('/buyer/dashboard', [BuyerController::class, 'BuyerDashboard'])->middleware('ValidToken');
@@ -33,22 +36,24 @@ Route::get('/buyer/posts/search/{id}', [PostController::class, 'search'])->middl
 Route::get('/buyer/post/details/{id}', [PostController::class, 'PostDetails'])->middleware('ValidToken');
 Route::get('/buyer/delete', [BuyerController::class, 'RemoveAccount'])->middleware('ValidToken');
 
-
-
-
 Route::post('/buyer/registration1', [BuyerController::class, 'RegistrationSubmit']);
 Route::post('/buyer/registration2', [BuyerController::class, 'Registration02Submit']);
 Route::post('/buyer/registration3', [BuyerController::class, 'Registration03Submit']);
 
+Route::post('/buyer/forget', [BuyerController::class, 'ForgetEmail']);
+
+
+// ################################ SELLER ###############################
 
 Route::post('/sellerlogin', [SellerAPIController::class, 'APILogin']); //done
 Route::post('/sellerlogout', [SellerAPIController::class, 'APILogout']); //done
 Route::post('/sellerregister', [SellerAPIController::class, 'APIRegister']);
-Route::get('/sellerorders', [SellerAPIController::class, 'APIOrders']);
+Route::get('/sellerorders/{id}', [SellerAPIController::class, 'APIOrders']);
 Route::get('/sellerorderdetails/{id}', [SellerAPIController::class, 'APIOrderDetails']);
 Route::get('/sellerprofile/{id}', [SellerAPIController::class, 'APIProfile']); // done
-Route::get('/sendmail', [SellerEmailController::class, 'showMail']);
+Route::get('/sendmail', [SellerEmailController::class, 'sendMail']);
 Route::get('/orderhistoryinvoice', [SellerEmailController::class, 'historyMail']);
-
+Route::get('/sellerbids/{id}', [SellerAPIController::class, 'APIBids']);
+Route::get('/sellerdashboard/{id}', [SellerAPIController::class, 'APIDashboard']);
 Route::get('/postlist', [PostAPIController::class, 'apilist']); //done
 Route::get('/postdetails/{id}', [PostAPIController::class, 'apidetails']); //done

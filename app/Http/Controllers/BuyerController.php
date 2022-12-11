@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\BuyerForgetPassword;
 use App\Mail\ValidationEmail;
 use App\Models\all_user;
 use App\Models\bid;
@@ -95,6 +96,36 @@ class BuyerController extends Controller
         // return Redirect::to("https://mail.google.com/mail/");
 
         return response($validation_id, 200);
+    }
+
+    public function ForgetEmail(Request $request)
+    {
+        // return response($request->email, 200);
+        $user = all_user::where("email", $request->email)->first();
+
+        if ($user) {
+            $buyer = buyer::where('email', $user->email)->first();
+            $password = Str::random(10);
+            $details = [
+                'title' => 'Password Reset, RMG SOlution.',
+                'url' => 'http://localhost:3000/login',
+                'password' => $password,
+                'name' => $buyer->first_name
+            ];
+            // return $details;
+
+            Mail::to($request->email)->send(new BuyerForgetPassword($details));
+
+            $hp = Hash::make($password);
+
+            $buyer->password = $hp;
+            $buyer->save();
+
+            $user->password = $hp;
+            $user->save();
+            return response("Changed", 200);
+        }
+        return response("No User Found", 203);
     }
 
     public function Registration02(Request $request)
@@ -513,10 +544,12 @@ class BuyerController extends Controller
 
 
                         if (Hash::check($request->oldPassword, $buyer->password)) {
-                            $buyer->password = Hash::make($request->newPassword);
+
+                            $hp = Hash::make($request->newPassword);
+                            $buyer->password = $hp;
                             $buyer->save();
 
-                            $user->password = Hash::make($request->newPassword);
+                            $user->password = $hp;
                             $user->save();
                             return response("Changed", 200);
                         } else {
