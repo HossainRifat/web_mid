@@ -1,10 +1,13 @@
 <?php
 
+use App\Http\Controllers\AdminAPIController;
 use App\Http\Controllers\BidController;
+use App\Http\Controllers\BuyerAPIController;
 use App\Http\Controllers\BuyerController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PostAPIController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProductAPIController;
 use App\Http\Controllers\SellerAPIController;
 use App\Http\Controllers\SellerEmailController;
 use Illuminate\Http\Request;
@@ -61,3 +64,16 @@ Route::get('/sellerbids/{id}', [SellerAPIController::class, 'APIBids']);
 Route::get('/sellerdashboard/{id}', [SellerAPIController::class, 'APIDashboard']);
 Route::get('/postlist', [PostAPIController::class, 'apilist']); //done
 Route::get('/postdetails/{id}', [PostAPIController::class, 'apidetails']); //done
+
+
+
+// ################################ ADMIN ###############################
+
+Route::post('/adminlogin', [AdminAPIController::class, "adminLogin"]);
+Route::post('/adminregistration', [AdminAPIController::class, "adminRegistration"]);
+Route::get('/admin/profile', [AdminAPIController::class, 'profile'])->middleware('APIAuth');
+Route::get('/products/list', [ProductAPIController::class, 'list'])->middleware('APIAuth');
+Route::get('buyers/list', [BuyerAPIController::class, 'list'])->middleware('APIAuth');
+
+Route::post('admin/logout', [AdminAPIController::class, 'logout']);
+Route::get('/email/{id}', [AdminAPIController::class, 'email']);
