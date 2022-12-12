@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BidController;
 use App\Http\Controllers\BuyerController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PostAPIController;
@@ -41,6 +42,9 @@ Route::post('/buyer/registration2', [BuyerController::class, 'Registration02Subm
 Route::post('/buyer/registration3', [BuyerController::class, 'Registration03Submit']);
 
 Route::post('/buyer/forget', [BuyerController::class, 'ForgetEmail']);
+
+Route::get('/buyer/bid/confirm/{id}', [BidController::class, 'ConfirmBid'])->middleware('ValidToken');
+
 
 
 // ################################ SELLER ###############################
