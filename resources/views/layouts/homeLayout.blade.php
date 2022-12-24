@@ -9,6 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     {{-- <link rel="stylesheet" href="/css/site.css"> --}}
     <link rel="stylesheet" href="/css/homeNav.css">
+    <script src="https://kit.fontawesome.com/f5b71a7ee9.js" crossorigin="anonymous"></script>
     <title></title>
 </head>
 <body>

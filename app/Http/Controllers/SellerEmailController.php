@@ -14,7 +14,7 @@ class SellerEmailController extends Controller
 {
     public function sendMail()
     {
-        $mail = "rislam727433@gmail.com";
+        $mail = session()->get('user');
         $code = "2761";
         $details = [
             'title' => 'Confirmation Mail',
